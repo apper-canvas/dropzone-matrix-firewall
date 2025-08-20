@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { uploadService } from "@/services/api/uploadService";
 import { toast } from "react-toastify";
-
 export const useFileUpload = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);

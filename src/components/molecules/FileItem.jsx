@@ -5,7 +5,6 @@ import Button from "@/components/atoms/Button";
 import ProgressBar from "@/components/atoms/ProgressBar";
 import Badge from "@/components/atoms/Badge";
 import { uploadService } from "@/services/api/uploadService";
-
 const FileItem = ({ 
   file, 
   onRemove, 

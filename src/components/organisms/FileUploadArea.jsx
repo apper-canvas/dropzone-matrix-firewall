@@ -8,7 +8,6 @@ import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 import Empty from "@/components/ui/Empty";
 import { useFileUpload } from "@/hooks/useFileUpload";
-
 const FileUploadArea = () => {
   const [previewFile, setPreviewFile] = useState(null);
   const [showPreview, setShowPreview] = useState(false);

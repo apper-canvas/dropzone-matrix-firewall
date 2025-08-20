@@ -1,7 +1,6 @@
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
 import { uploadService } from "@/services/api/uploadService";
-
 const UploadStats = ({ files, stats, totalSize }) => {
   const formattedSize = uploadService.formatFileSize(totalSize);
   
