@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Header from "@/components/organisms/Header";
 import FileUploadArea from "@/components/organisms/FileUploadArea";
-import AppIcon from "@/components/atoms/AppIcon";
+import ApperIcon from "@/components/ApperIcon";
 import React from "react";
 
 const HomePage = () => {
@@ -71,16 +71,16 @@ const HomePage = () => {
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                className="card-elevated p-6 text-center hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
 className="card-elevated p-6 text-center hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
-              >
-                <div className="flex items-center justify-center w-12 h-12 bg-gradient-primary/20 rounded-lg mx-auto mb-4">
-                  <AppIcon name={feature.icon} size={24} className="text-primary" />
-                </div>
-                  {feature.title}
-                </h3>
+>
+<div className="flex items-center justify-center w-12 h-12 bg-gradient-primary/20 rounded-lg mx-auto mb-4">
+  <ApperIcon name={feature.icon} size={24} className="text-primary" />
+</div>
+<h3 className="text-lg font-semibold text-white mb-2">
+  {feature.title}
+</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   {feature.description}
                 </p>
