@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 1,
+    "name": "presentation.pdf",
+    "size": 2048576,
+    "type": "application/pdf",
+    "status": "completed",
+    "progress": 100,
+    "uploadedAt": "2024-01-15T10:30:00Z",
+    "url": "/uploads/presentation.pdf"
+  },
+  {
+    "Id": 2,
+    "name": "image.jpg",
+    "size": 1024768,
+    "type": "image/jpeg",
+    "status": "completed",
+    "progress": 100,
+    "uploadedAt": "2024-01-15T10:25:00Z",
+    "url": "/uploads/image.jpg"
+  },
+  {
+    "Id": 3,
+    "name": "document.docx",
+    "size": 512000,
+    "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "status": "failed",
+    "progress": 0,
+    "uploadedAt": "2024-01-15T10:20:00Z",
+    "url": null
+  }
+]
