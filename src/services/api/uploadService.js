@@ -1,41 +1,5 @@
 import { toast } from 'react-toastify';
 
-// Mock data for development (replaces uploads.json)
-const mockUploads = [
-  {
-    Id: 1,
-    name: "presentation.pdf",
-    size: 2048576,
-    type: "application/pdf",
-    status: "completed",
-    progress: 100,
-    uploadedAt: "2024-01-15T10:30:00Z",
-    url: "/uploads/presentation.pdf"
-  },
-  {
-    Id: 2,
-    name: "image.jpg",
-    size: 1024768,
-    type: "image/jpeg",
-    status: "completed",
-    progress: 100,
-    uploadedAt: "2024-01-15T10:25:00Z",
-    url: "/uploads/image.jpg"
-  },
-  {
-    Id: 3,
-    name: "document.docx",
-    size: 512000,
-    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    status: "failed",
-    progress: 0,
-    uploadedAt: "2024-01-15T10:20:00Z",
-    url: null
-  }
-];
-
-let uploads = [...mockUploads];
-
 // Initialize ApperClient for database operations
 const initializeApperClient = () => {
   const { ApperClient } = window.ApperSDK;
@@ -45,39 +9,37 @@ const initializeApperClient = () => {
   });
 };
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 export const uploadService = {
   async getAll() {
     try {
-      // For now, using mock service layer since no database schema provided
-      await delay(300);
-      return [...uploads];
-      
-      /* When database schema becomes available, replace with:
       const apperClient = initializeApperClient();
       const params = {
         fields: [
           { field: { Name: "Id" } },
-          { field: { Name: "name" } },
-          { field: { Name: "size" } },
-          { field: { Name: "type" } },
-          { field: { Name: "status" } },
-          { field: { Name: "progress" } },
-          { field: { Name: "uploadedAt" } },
-          { field: { Name: "url" } }
+          { field: { Name: "Name" } },
+          { field: { Name: "Tags" } },
+          { field: { Name: "Owner" } },
+          { field: { Name: "CreatedOn" } },
+          { field: { Name: "CreatedBy" } },
+          { field: { Name: "ModifiedOn" } },
+          { field: { Name: "ModifiedBy" } },
+          { field: { Name: "size_c" } },
+          { field: { Name: "type_c" } },
+          { field: { Name: "status_c" } },
+          { field: { Name: "progress_c" } },
+          { field: { Name: "uploaded_at_c" } },
+          { field: { Name: "url_c" } }
         ],
-        orderBy: [{ fieldName: "uploadedAt", sorttype: "DESC" }]
+        orderBy: [{ fieldName: "CreatedOn", sorttype: "DESC" }]
       };
       
-      const response = await apperClient.fetchRecords("uploads_table", params);
+      const response = await apperClient.fetchRecords("upload_c", params);
       if (!response.success) {
         console.error(response.message);
         toast.error(response.message);
         return [];
       }
       return response.data || [];
-      */
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error fetching uploads:", error.response.data.message);
@@ -92,32 +54,32 @@ export const uploadService = {
 
   async getById(id) {
     try {
-      // For now, using mock service layer since no database schema provided
-      await delay(200);
-      return uploads.find(upload => upload.Id === parseInt(id));
-      
-      /* When database schema becomes available, replace with:
       const apperClient = initializeApperClient();
       const params = {
         fields: [
           { field: { Name: "Id" } },
-          { field: { Name: "name" } },
-          { field: { Name: "size" } },
-          { field: { Name: "type" } },
-          { field: { Name: "status" } },
-          { field: { Name: "progress" } },
-          { field: { Name: "uploadedAt" } },
-          { field: { Name: "url" } }
+          { field: { Name: "Name" } },
+          { field: { Name: "Tags" } },
+          { field: { Name: "Owner" } },
+          { field: { Name: "CreatedOn" } },
+          { field: { Name: "CreatedBy" } },
+          { field: { Name: "ModifiedOn" } },
+          { field: { Name: "ModifiedBy" } },
+          { field: { Name: "size_c" } },
+          { field: { Name: "type_c" } },
+          { field: { Name: "status_c" } },
+          { field: { Name: "progress_c" } },
+          { field: { Name: "uploaded_at_c" } },
+          { field: { Name: "url_c" } }
         ]
       };
       
-      const response = await apperClient.getRecordById("uploads_table", parseInt(id), params);
+      const response = await apperClient.getRecordById("upload_c", parseInt(id), params);
       if (!response.success) {
         console.error(response.message);
         return null;
       }
       return response.data;
-      */
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error(`Error fetching upload with ID ${id}:`, error.response.data.message);
@@ -130,33 +92,22 @@ export const uploadService = {
 
   async create(uploadData) {
     try {
-      // For now, using mock service layer since no database schema provided
-      await delay(400);
-      const newUpload = {
-        Id: uploads.length > 0 ? Math.max(...uploads.map(u => u.Id)) + 1 : 1,
-        ...uploadData,
-        uploadedAt: new Date().toISOString(),
-        status: uploadData.status || "pending",
-        progress: uploadData.progress || 0
-      };
-      uploads.push(newUpload);
-      return { ...newUpload };
-      
-      /* When database schema becomes available, replace with:
       const apperClient = initializeApperClient();
       const params = {
         records: [{
           // Only include updateable fields based on database schema
-          name: uploadData.name,
-          size: uploadData.size,
-          type: uploadData.type,
-          status: uploadData.status || "pending",
-          progress: uploadData.progress || 0,
-          url: uploadData.url || null
+          Name: uploadData.Name || uploadData.name,
+          Tags: uploadData.Tags || "",
+          size_c: uploadData.size_c || uploadData.size,
+          type_c: uploadData.type_c || uploadData.type,
+          status_c: uploadData.status_c || uploadData.status || "pending",
+          progress_c: uploadData.progress_c || uploadData.progress || 0,
+          uploaded_at_c: uploadData.uploaded_at_c || uploadData.uploadedAt || new Date().toISOString(),
+          url_c: uploadData.url_c || uploadData.url || null
         }]
       };
       
-      const response = await apperClient.createRecord("uploads_table", params);
+      const response = await apperClient.createRecord("upload_c", params);
       if (!response.success) {
         console.error(response.message);
         toast.error(response.message);
@@ -182,7 +133,6 @@ export const uploadService = {
         }
       }
       throw new Error("Failed to create upload record");
-      */
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error creating upload:", error.response.data.message);
@@ -197,26 +147,40 @@ export const uploadService = {
 
   async update(id, data) {
     try {
-      // For now, using mock service layer since no database schema provided
-      await delay(300);
-      const index = uploads.findIndex(upload => upload.Id === parseInt(id));
-      if (index !== -1) {
-        uploads[index] = { ...uploads[index], ...data };
-        return { ...uploads[index] };
-      }
-      throw new Error("Upload not found");
-      
-      /* When database schema becomes available, replace with:
       const apperClient = initializeApperClient();
-      const params = {
-        records: [{
-          Id: parseInt(id),
-          // Only include updateable fields based on database schema
-          ...data
-        }]
+      const updateData = {
+        Id: parseInt(id)
       };
       
-      const response = await apperClient.updateRecord("uploads_table", params);
+      // Only include updateable fields that are provided in data
+      if (data.Name !== undefined || data.name !== undefined) {
+        updateData.Name = data.Name || data.name;
+      }
+      if (data.Tags !== undefined) updateData.Tags = data.Tags;
+      if (data.size_c !== undefined || data.size !== undefined) {
+        updateData.size_c = data.size_c || data.size;
+      }
+      if (data.type_c !== undefined || data.type !== undefined) {
+        updateData.type_c = data.type_c || data.type;
+      }
+      if (data.status_c !== undefined || data.status !== undefined) {
+        updateData.status_c = data.status_c || data.status;
+      }
+      if (data.progress_c !== undefined || data.progress !== undefined) {
+        updateData.progress_c = data.progress_c || data.progress;
+      }
+      if (data.uploaded_at_c !== undefined || data.uploadedAt !== undefined) {
+        updateData.uploaded_at_c = data.uploaded_at_c || data.uploadedAt;
+      }
+      if (data.url_c !== undefined || data.url !== undefined) {
+        updateData.url_c = data.url_c || data.url;
+      }
+      
+      const params = {
+        records: [updateData]
+      };
+      
+      const response = await apperClient.updateRecord("upload_c", params);
       if (!response.success) {
         console.error(response.message);
         toast.error(response.message);
@@ -242,7 +206,6 @@ export const uploadService = {
         }
       }
       throw new Error("Failed to update upload record");
-      */
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error updating upload:", error.response.data.message);
@@ -257,22 +220,12 @@ export const uploadService = {
 
   async delete(id) {
     try {
-      // For now, using mock service layer since no database schema provided
-      await delay(250);
-      const index = uploads.findIndex(upload => upload.Id === parseInt(id));
-      if (index !== -1) {
-        const deleted = uploads.splice(index, 1)[0];
-        return { ...deleted };
-      }
-      throw new Error("Upload not found");
-      
-      /* When database schema becomes available, replace with:
       const apperClient = initializeApperClient();
       const params = {
         RecordIds: [parseInt(id)]
       };
       
-      const response = await apperClient.deleteRecord("uploads_table", params);
+      const response = await apperClient.deleteRecord("upload_c", params);
       if (!response.success) {
         console.error(response.message);
         toast.error(response.message);
@@ -293,7 +246,6 @@ export const uploadService = {
         return successfulDeletions.length > 0;
       }
       return false;
-      */
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error deleting upload:", error.response.data.message);
@@ -308,20 +260,21 @@ export const uploadService = {
 
   async uploadFile(file, onProgress) {
     const newUpload = await this.create({
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      status: "uploading"
+      Name: file.name,
+      size_c: file.size,
+      type_c: file.type,
+      status_c: "uploading"
     });
 
     // Simulate upload progress
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     for (let progress = 0; progress <= 100; progress += Math.random() * 15 + 5) {
       await delay(Math.random() * 200 + 100);
       const currentProgress = Math.min(progress, 100);
       
       await this.update(newUpload.Id, {
-        progress: currentProgress,
-        status: currentProgress === 100 ? "completed" : "uploading"
+        progress_c: currentProgress,
+        status_c: currentProgress === 100 ? "completed" : "uploading"
       });
       
       if (onProgress) {
@@ -335,10 +288,11 @@ export const uploadService = {
   },
 
   async cancelUpload(id) {
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     await delay(200);
     return this.update(id, {
-      status: "cancelled",
-      progress: 0
+      status_c: "cancelled",
+      progress_c: 0
     });
   },
 
@@ -351,14 +305,14 @@ export const uploadService = {
   },
 
   getFileIcon(type) {
-    if (type.startsWith("image/")) return "Image";
-    if (type.includes("pdf")) return "FileText";
-    if (type.includes("document") || type.includes("word")) return "File";
-    if (type.includes("sheet") || type.includes("excel")) return "FileSpreadsheet";
-    if (type.includes("presentation") || type.includes("powerpoint")) return "Presentation";
-    if (type.startsWith("video/")) return "Video";
-    if (type.startsWith("audio/")) return "Music";
-    if (type.includes("zip") || type.includes("rar")) return "Archive";
+    if (type?.startsWith("image/")) return "Image";
+    if (type?.includes("pdf")) return "FileText";
+    if (type?.includes("document") || type?.includes("word")) return "File";
+    if (type?.includes("sheet") || type?.includes("excel")) return "FileSpreadsheet";
+    if (type?.includes("presentation") || type?.includes("powerpoint")) return "Presentation";
+    if (type?.startsWith("video/")) return "Video";
+    if (type?.startsWith("audio/")) return "Music";
+    if (type?.includes("zip") || type?.includes("rar")) return "Archive";
     return "File";
   }
 };

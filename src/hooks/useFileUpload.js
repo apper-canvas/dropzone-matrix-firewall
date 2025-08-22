@@ -135,12 +135,12 @@ export const useFileUpload = () => {
     return files.reduce((total, file) => total + file.size, 0);
   }, [files]);
 
-  const getUploadStats = useCallback(() => {
+const getUploadStats = useCallback(() => {
     const total = files.length;
-    const completed = files.filter(f => f.status === "completed").length;
-    const uploading = files.filter(f => f.status === "uploading").length;
-    const failed = files.filter(f => f.status === "failed").length;
-    const pending = files.filter(f => f.status === "pending").length;
+    const completed = files.filter(f => f.status_c === "completed").length;
+    const uploading = files.filter(f => f.status_c === "uploading").length;
+    const failed = files.filter(f => f.status_c === "failed").length;
+    const pending = files.filter(f => f.status_c === "pending").length;
 
     return { total, completed, uploading, failed, pending };
   }, [files]);

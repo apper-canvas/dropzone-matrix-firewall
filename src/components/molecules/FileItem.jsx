@@ -109,11 +109,11 @@ const FileItem = ({
             </Button>
           )}
           
-          <Button
+<Button
             variant="ghost"
             size="sm"
             onClick={handleRemove}
-            disabled={isRemoving || file.status === "uploading"}
+            disabled={isRemoving || file.status_c === "uploading"}
             className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-red-400 hover:text-red-300 hover:bg-red-500/10"
           >
             {isRemoving ? (
