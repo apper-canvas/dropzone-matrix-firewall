@@ -54,7 +54,7 @@ const Header = () => {
             </div>
 <div>
               <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                Files Manager
+                Files Manager Pro
               </h1>
               <p className="text-gray-400 text-sm">
                 Upload and manage your files with ease
