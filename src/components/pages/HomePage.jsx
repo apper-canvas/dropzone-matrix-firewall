@@ -97,9 +97,9 @@ className="card-elevated p-6 text-center hover:shadow-2xl transition-all duratio
         transition={{ duration: 0.3, delay: 0.8 }}
         className="border-t border-gray-700/50 bg-surface/30 backdrop-blur-sm"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center text-gray-400">
-            <p>&copy; 2024 DropZone. Built with React + Vite.</p>
+            <p>&copy; 2024 Files Manager. Built with React + Vite.</p>
           </div>
         </div>
       </motion.footer>

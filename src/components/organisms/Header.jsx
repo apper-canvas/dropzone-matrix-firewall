@@ -52,9 +52,9 @@ const Header = () => {
             <div className="flex items-center justify-center w-12 h-12 bg-gradient-primary rounded-xl shadow-lg">
               <ApperIcon name="CloudUpload" size={24} className="text-white" />
             </div>
-            <div>
+<div>
               <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                DropZone
+                Files Manager
               </h1>
               <p className="text-gray-400 text-sm">
                 Upload and manage your files with ease
