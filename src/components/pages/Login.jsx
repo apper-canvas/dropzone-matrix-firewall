@@ -21,9 +21,9 @@ function Login() {
           <div className="w-14 h-14 shrink-0 rounded-xl flex items-center justify-center bg-gradient-primary text-white text-2xl 2xl:text-3xl font-bold">
             D
           </div>
-          <div className="flex flex-col gap-1 items-center justify-center">
+<div className="flex flex-col gap-1 items-center justify-center">
             <div className="text-center text-lg xl:text-xl font-bold text-white">
-              Sign in to DropZone
+              Sign in to Dropper
             </div>
             <div className="text-center text-sm text-gray-400">
               Welcome back, please sign in to continue
