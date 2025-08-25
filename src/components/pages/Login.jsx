@@ -23,7 +23,7 @@ function Login() {
           </div>
 <div className="flex flex-col gap-1 items-center justify-center">
             <div className="text-center text-lg xl:text-xl font-bold text-white">
-              Sign in to Dropper
+              Sign in to Dropper 1
             </div>
             <div className="text-center text-sm text-gray-400">
               Welcome back, please sign in to continue
