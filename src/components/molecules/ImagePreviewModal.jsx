@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { uploadService } from "@/services/api/uploadService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-import { uploadService } from "@/services/api/uploadService";
 
 const ImagePreviewModal = ({ file, isOpen, onClose }) => {
   useEffect(() => {
@@ -51,10 +51,10 @@ const ImagePreviewModal = ({ file, isOpen, onClose }) => {
                 <h3 className="text-lg font-semibold text-white truncate">
                   {file.name}
                 </h3>
-                <div className="flex items-center space-x-4 text-sm text-gray-400">
+<div className="flex items-center space-x-4 text-sm text-gray-400">
                   <span>{formattedSize}</span>
                   <span>•</span>
-                  <span>{file.type}</span>
+                  <span>{file.file_type_c || file.type || 'Unknown'}</span>
                 </div>
               </div>
               <Button

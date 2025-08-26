@@ -136,7 +136,7 @@ export const useFileUpload = () => {
   }, [files]);
 
 const getUploadStats = useCallback(() => {
-    const total = files.length;
+const total = files.length;
     const completed = files.filter(f => f.status_c === "completed").length;
     const uploading = files.filter(f => f.status_c === "uploading").length;
     const failed = files.filter(f => f.status_c === "failed").length;
@@ -144,6 +144,35 @@ const getUploadStats = useCallback(() => {
 
     return { total, completed, uploading, failed, pending };
   }, [files]);
+
+  // Helper function to convert MIME type to user-friendly category
+  const getFileTypeCategory = useCallback((mimeType) => {
+    if (!mimeType) return "File";
+    
+    const type = mimeType.toLowerCase();
+    
+    if (type.startsWith('image/')) return "Image";
+    if (type.startsWith('video/')) return "Video";
+    if (type.startsWith('audio/')) return "Audio";
+    if (type.includes('pdf')) return "Document";
+    if (type.includes('word') || type.includes('document')) return "Document";
+    if (type.includes('sheet') || type.includes('excel')) return "Spreadsheet";
+    if (type.includes('presentation') || type.includes('powerpoint')) return "Presentation";
+    if (type.includes('text/')) return "Text";
+    if (type.includes('zip') || type.includes('rar') || type.includes('7z')) return "Archive";
+    if (type.includes('json') || type.includes('xml')) return "Data";
+    
+    return "File";
+  }, []);
+
+  // Process files to add file_type_c field
+  const processFileWithType = useCallback((file) => {
+    const fileType = getFileTypeCategory(file.type);
+    return {
+      ...file,
+      file_type_c: fileType
+    };
+  }, [getFileTypeCategory]);
 
   return {
     files,

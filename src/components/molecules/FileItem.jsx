@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { uploadService } from "@/services/api/uploadService";
 import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
 import ProgressBar from "@/components/atoms/ProgressBar";
+import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
-import { uploadService } from "@/services/api/uploadService";
 const FileItem = ({ 
   file, 
   onRemove, 
@@ -43,12 +43,24 @@ const FileItem = ({
       case "cancelled": return "Cancelled";
       default: return "Pending";
     }
+};
+
+  const getFileTypeCategory = (mimeType) => {
+    if (mimeType.startsWith('image/')) return 'Image';
+    if (mimeType.startsWith('video/')) return 'Video';
+    if (mimeType.startsWith('audio/')) return 'Audio';
+    if (mimeType.includes('pdf')) return 'PDF';
+    if (mimeType.includes('word') || mimeType.includes('document')) return 'Document';
+    if (mimeType.includes('sheet') || mimeType.includes('excel')) return 'Spreadsheet';
+    if (mimeType.includes('presentation') || mimeType.includes('powerpoint')) return 'Presentation';
+    if (mimeType.includes('text/')) return 'Text';
+    if (mimeType.includes('zip') || mimeType.includes('rar') || mimeType.includes('archive')) return 'Archive';
+    return 'File';
   };
 
   const fileIcon = uploadService.getFileIcon(file.type);
   const formattedSize = uploadService.formatFileSize(file.size);
   const canPreview = file.type.startsWith("image/");
-
   return (
     <div className={cn(
       "card-elevated p-4 transition-all duration-300 hover:shadow-2xl group",
@@ -78,9 +90,9 @@ const FileItem = ({
             </Badge>
           </div>
           
-          <div className="flex items-center justify-between text-sm">
+<div className="flex items-center justify-between text-sm">
             <span className="text-gray-400">{formattedSize}</span>
-            <span className="text-gray-500 capitalize">{file.type.split("/")[0]}</span>
+            <span className="text-gray-500">{file.file_type_c || getFileTypeCategory(file.type)}</span>
           </div>
 
           {/* Progress Bar */}
