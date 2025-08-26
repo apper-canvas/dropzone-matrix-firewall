@@ -94,6 +94,18 @@ const FileItem = ({
             <span className="text-gray-400">{formattedSize}</span>
             <span className="text-gray-500">{file.file_type_c || getFileTypeCategory(file.type)}</span>
           </div>
+          
+          {file.uploaded_at_c && (
+            <div className="text-sm text-gray-500 mt-1">
+              Uploaded: {new Date(file.uploaded_at_c).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </div>
+          )}
 
           {/* Progress Bar */}
           {(file.status === "uploading" || (file.status === "completed" && file.progress === 100)) && (
