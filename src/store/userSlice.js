@@ -3,17 +3,20 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   isAuthenticated: false,
+  userType: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action) => {
+setUser: (state, action) => {
       // CRITICAL: Always use deep cloning to avoid reference issues
       // This prevents potential issues with object mutations
       state.user = JSON.parse(JSON.stringify(action.payload));
       state.isAuthenticated = !!action.payload;
+      // Extract userType from user data if available
+      state.userType = action.payload?.user_type_c || null;
     },
     clearUser: (state) => {
       state.user = null;

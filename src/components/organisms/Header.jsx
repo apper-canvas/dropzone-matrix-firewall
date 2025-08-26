@@ -4,24 +4,45 @@ import { useContext } from "react";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import { AuthContext } from "@/App";
+
 const UserSection = () => {
-  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { user, isAuthenticated, userType } = useSelector((state) => state.user);
   const { logout } = useContext(AuthContext);
 
   if (!isAuthenticated || !user) {
     return null;
   }
 
+  // Get user type badge styling
+  const getUserTypeBadge = (type) => {
+    if (!type) return null;
+    
+    const badgeStyles = {
+      'Admin': 'bg-gradient-to-r from-blue-500 to-blue-600 text-white',
+      'Standard': 'bg-gradient-to-r from-purple-500 to-purple-600 text-white',
+      'Guest': 'bg-gray-600 text-gray-200'
+    };
+    
+    return (
+      <span className={`px-2 py-1 rounded-full text-xs font-medium ${badgeStyles[type] || badgeStyles['Guest']}`}>
+        {type}
+      </span>
+    );
+  };
+
   const handleLogout = async () => {
     await logout();
   };
 
-  return (
+return (
     <div className="flex items-center space-x-3">
       <div className="hidden sm:block text-right">
-        <p className="text-sm font-medium text-white">
-          {user.firstName} {user.lastName}
-        </p>
+        <div className="flex items-center justify-end space-x-2 mb-1">
+          <p className="text-sm font-medium text-white">
+            {user.firstName} {user.lastName}
+          </p>
+          {getUserTypeBadge(userType)}
+        </div>
         <p className="text-xs text-gray-400">{user.emailAddress}</p>
       </div>
       
