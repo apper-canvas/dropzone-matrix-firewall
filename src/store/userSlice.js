@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: null,
+user: null,
   isAuthenticated: false,
   userType: null,
+  userRole: null,
 };
 
 export const userSlice = createSlice({
@@ -17,10 +18,14 @@ setUser: (state, action) => {
       state.isAuthenticated = !!action.payload;
       // Extract userType from user data if available
       state.userType = action.payload?.user_type_c || null;
+      // Extract userRole from user data if available
+      state.userRole = action.payload?.user_role_c || null;
     },
-    clearUser: (state) => {
+clearUser: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.userType = null;
+      state.userRole = null;
     },
   },
 });

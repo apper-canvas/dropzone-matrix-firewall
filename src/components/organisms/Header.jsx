@@ -6,7 +6,7 @@ import Button from "@/components/atoms/Button";
 import { AuthContext } from "@/App";
 
 const UserSection = () => {
-  const { user, isAuthenticated, userType } = useSelector((state) => state.user);
+const { user, isAuthenticated, userType, userRole } = useSelector((state) => state.user);
   const { logout } = useContext(AuthContext);
 
   if (!isAuthenticated || !user) {
@@ -14,7 +14,7 @@ const UserSection = () => {
   }
 
   // Get user type badge styling
-  const getUserTypeBadge = (type) => {
+const getUserTypeBadge = (type) => {
     if (!type) return null;
     
     const badgeStyles = {
@@ -30,6 +30,25 @@ const UserSection = () => {
     );
   };
 
+  const getUserRoleBadge = (role) => {
+    if (!role) return null;
+    
+    const roleBadgeStyles = {
+      'Admin': 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+      'Manager': 'bg-gradient-to-r from-teal-500 to-teal-600 text-white',
+      'Developer': 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white',
+      'Designer': 'bg-gradient-to-r from-pink-500 to-pink-600 text-white',
+      'Standard': 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white',
+      'Guest': 'bg-slate-600 text-slate-200'
+    };
+    
+    return (
+      <span className={`px-2 py-1 rounded-full text-xs font-medium ${roleBadgeStyles[role] || roleBadgeStyles['Guest']}`}>
+        {role}
+      </span>
+    );
+  };
+
   const handleLogout = async () => {
     await logout();
   };
@@ -37,11 +56,14 @@ const UserSection = () => {
 return (
     <div className="flex items-center space-x-3">
       <div className="hidden sm:block text-right">
-        <div className="flex items-center justify-end space-x-2 mb-1">
+<div className="flex items-center justify-end space-x-2 mb-1">
           <p className="text-sm font-medium text-white">
             {user.firstName} {user.lastName}
           </p>
-          {getUserTypeBadge(userType)}
+          <div className="flex items-center space-x-1">
+            {getUserTypeBadge(userType)}
+            {getUserRoleBadge(userRole)}
+          </div>
         </div>
         <p className="text-xs text-gray-400">{user.emailAddress}</p>
       </div>
